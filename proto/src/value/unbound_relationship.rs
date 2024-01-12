@@ -1,37 +1,37 @@
 use std::collections::HashMap;
-use crate::value::value::Value;
 use proto_macros::bolt_struct_derive;
+use crate::value::value::Value;
 
 #[bolt_struct_derive]
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Node {
+pub struct UnboundRelationship {
     pub(crate) identity: i64,
-    pub(crate) labels: Vec<String>,
+    pub(crate) rel_type: String,
     pub(crate) properties: HashMap<String, Value>,
     pub(crate) element_id: String,
 }
 
-impl Node {
+impl UnboundRelationship {
     pub fn new(
         identity: i64,
-        labels: Vec<String>,
+        rel_type: String,
         properties: HashMap<String, impl Into<Value>>,
         element_id: String,
     ) -> Self {
         Self {
             identity,
-            labels,
-            properties: properties.into_iter().map(|(k, v)| (k, v.into())).collect(),
+            rel_type,
+            properties,
             element_id,
         }
     }
 
-    pub fn node_identity(&self) -> i64 {
+    pub fn identity(&self) -> i64 {
         self.identity
     }
 
-    pub fn labels(&self) -> &[String] {
-        &self.labels
+    pub fn rel_type(&self) -> &str {
+        &self.rel_type
     }
 
     pub fn properties(&self) -> &HashMap<String, Value> {
@@ -42,4 +42,3 @@ impl Node {
         &self.element_id
     }
 }
-
