@@ -2,7 +2,6 @@ use proto_macros::bolt_struct_derive;
 use crate::value::node::Node;
 use crate::value::unbound_relationship::UnboundRelationship;
 
-#[bolt_struct_derive]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Path {
     pub(crate) nodes: Vec<Node>,

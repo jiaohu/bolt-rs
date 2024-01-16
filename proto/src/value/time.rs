@@ -1,6 +1,6 @@
 use proto_macros::bolt_struct_derive;
 
-#[bolt_struct_derive]
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Time {
     pub(crate) nanoseconds: i64,

@@ -1,6 +1,5 @@
 use proto_macros::bolt_struct_derive;
 
-#[bolt_struct_derive]
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct Duration {
     pub(crate) months: i64,

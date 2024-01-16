@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 use crate::value::value::Value;
 use proto_macros::bolt_struct_derive;
+use proto_common::marker::SIGNATURE_NODE;
 
-#[bolt_struct_derive]
+// #[bolt_struct_derive(SIGNATURE_NODE)]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Node {
     pub(crate) identity: i64,

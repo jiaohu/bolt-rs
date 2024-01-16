@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use proto_macros::bolt_struct_derive;
 use crate::value::value::Value;
 
-#[bolt_struct_derive]
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Relationship {
     pub(crate) identity: i64,

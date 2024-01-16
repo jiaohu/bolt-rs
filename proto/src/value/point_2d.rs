@@ -1,6 +1,5 @@
 use proto_macros::bolt_struct_derive;
 
-#[bolt_struct_derive]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Point2D {
     pub(crate) srid: i32,

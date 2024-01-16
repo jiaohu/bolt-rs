@@ -46,9 +46,6 @@ impl Eq for Value {
     }
 }
 
-impl BoltValue for Value {
-
-}
 
 impl<T> From<Vec<T>> for Value
     where
