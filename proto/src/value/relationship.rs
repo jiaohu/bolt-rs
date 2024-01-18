@@ -1,7 +1,7 @@
 use std::collections::HashMap;
+use proto_common::marker::SIGNATURE_RELATIONSHIP;
 use proto_macros::bolt_struct_derive;
 use crate::value::value::Value;
-use proto_common::marker::SIGNATURE_RELATIONSHIP;
 use crate::serialization::{BoltStructure, BoltValue};
 
 #[bolt_struct_derive]

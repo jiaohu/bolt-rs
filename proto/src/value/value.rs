@@ -6,9 +6,9 @@ use std::path::Path;
 use bytes::{Buf, BufMut, Bytes, BytesMut};
 use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, Offset, Timelike, TimeZone};
 use chrono_tz::Tz;
-use proto_common::marker::{MARKER_BOOLEAN_FALSE, MARKER_BOOLEAN_TRUE, MARKER_FLOAT, MARKER_INT16, MARKER_INT32, MARKER_INT64, MARKER_INT8, MARKER_LARGE_BYTES, MARKER_LARGE_LIST, MARKER_LARGE_MAP, MARKER_LARGE_STRING, MARKER_MEDIUM_BYTES, MARKER_MEDIUM_LIST, MARKER_MEDIUM_MAP, MARKER_MEDIUM_STRING, MARKER_NULL, MARKER_SMALL_BYTES, MARKER_SMALL_LIST, MARKER_SMALL_MAP, MARKER_SMALL_STRING, MARKER_TINY_LIST_BASE, MARKER_TINY_MAP_BASE, MARKER_TINY_STRING_BASE, MARKER_TINY_STRUCT_BASE, SIGNATURE_DATE, SIGNATURE_DATE_TIME_ZONE_ID, SIGNATURE_LEGACY_DATE_TIME, SIGNATURE_LEGACY_DATE_TIME_ZONED_ID, SIGNATURE_LOCAL_DATE_TIME, SIGNATURE_LOCAL_TIME, SIGNATURE_TIME};
+use proto_common::marker::*;
 use crate::result_type::{ConversionError, DeserializationError, DeserializeResult, SerializationError, SerializeResult};
-use crate::serialization::{BoltValue, get_structure_info};
+use crate::serialization::*;
 use crate::value::duration::Duration;
 use crate::value::node::Node;
 use crate::value::point_2d::Point2D;
@@ -328,17 +328,17 @@ impl BoltValue for Value {
             let marker = bytes.get_u8();
             match marker {
                 // Boolean
-                MARKER_TRUE => Ok((Value::Boolean(true), bytes)),
-                MARKER_FALSE => Ok((Value::Boolean(false), bytes)),
+                MARKER_BOOLEAN_TRUE => Ok((Value::Boolean(true), bytes)),
+                MARKER_BOOLEAN_FALSE => Ok((Value::Boolean(false), bytes)),
                 // Tiny int
                 marker if (-16..=127).contains(&(marker as i8)) => {
                     Ok((Value::Integer(i64::from(marker as i8)), bytes))
                 }
                 // Other int types
-                MARKER_INT_8 => Ok((Value::Integer(i64::from(bytes.get_i8())), bytes)),
-                MARKER_INT_16 => Ok((Value::Integer(i64::from(bytes.get_i16())), bytes)),
-                MARKER_INT_32 => Ok((Value::Integer(i64::from(bytes.get_i32())), bytes)),
-                MARKER_INT_64 => Ok((Value::Integer(bytes.get_i64()), bytes)),
+                MARKER_INT8 => Ok((Value::Integer(i64::from(bytes.get_i8())), bytes)),
+                MARKER_INT16 => Ok((Value::Integer(i64::from(bytes.get_i16())), bytes)),
+                MARKER_INT32 => Ok((Value::Integer(i64::from(bytes.get_i32())), bytes)),
+                MARKER_INT64 => Ok((Value::Integer(bytes.get_i64()), bytes)),
                 // Float
                 MARKER_FLOAT => Ok((Value::Float(bytes.get_f64()), bytes)),
                 // Byte array
@@ -488,16 +488,6 @@ fn deserialize_structure<B: Buf + UnwindSafe>(
         SIGNATURE_RELATIONSHIP => deserialize_struct!(Relationship, bytes),
         SIGNATURE_PATH => deserialize_struct!(Path, bytes),
         SIGNATURE_UNBOUND_RELATIONSHIP => deserialize_struct!(UnboundRelationship, bytes),
-        SIGNATURE_DATE => {
-            let days_since_epoch: i64 = deserialize_variant!(Integer, bytes);
-            Ok((
-                Value::Date(
-                    NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()
-                        + chrono::Duration::days(days_since_epoch),
-                ),
-                bytes,
-            ))
-        }
         SIGNATURE_TIME => {
             let nanos_since_midnight: i64 = deserialize_variant!(Integer, bytes);
             let zone_offset: i32 = deserialize_variant!(Integer, bytes) as i32;
