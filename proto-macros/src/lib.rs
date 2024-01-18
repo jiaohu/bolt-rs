@@ -1,5 +1,4 @@
 use proc_macro::TokenStream;
-use syn::DataStruct;
 
 mod bolt_struct;
 
@@ -7,4 +6,3 @@ mod bolt_struct;
 pub fn bolt_struct_derive(attr: TokenStream, item: TokenStream) -> TokenStream {
     bolt_struct::generate_struct(attr.into(), item.into()).into()
 }
-

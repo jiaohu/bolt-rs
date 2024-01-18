@@ -1,5 +1,8 @@
 use proto_macros::bolt_struct_derive;
+use proto_common::marker::SIGNATURE_POINT_2D;
+use crate::serialization::{BoltStructure, BoltValue};
 
+#[bolt_struct_derive]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Point2D {
     pub(crate) srid: i32,
@@ -25,4 +28,8 @@ impl Point2D {
     }
 }
 
-
+impl BoltStructure for Point2D {
+    fn signature(&self) -> u8 {
+        SIGNATURE_POINT_2D
+    }
+}

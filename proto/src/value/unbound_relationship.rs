@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 use proto_macros::bolt_struct_derive;
 use crate::value::value::Value;
+use proto_common::marker::SIGNATURE_UNBOUND_RELATIONSHIP;
+use crate::serialization::{BoltStructure, BoltValue};
 
-
+#[bolt_struct_derive]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct UnboundRelationship {
     pub(crate) identity: i64,
@@ -21,7 +23,7 @@ impl UnboundRelationship {
         Self {
             identity,
             rel_type,
-            properties,
+            properties: properties.into_iter().map(|(k, v)| (k, v.into())).collect(),
             element_id,
         }
     }
@@ -40,5 +42,11 @@ impl UnboundRelationship {
 
     pub fn element_id(&self) -> &str {
         &self.element_id
+    }
+}
+
+impl BoltStructure for UnboundRelationship {
+    fn signature(&self) -> u8 {
+        SIGNATURE_UNBOUND_RELATIONSHIP
     }
 }

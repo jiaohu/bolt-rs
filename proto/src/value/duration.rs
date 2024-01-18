@@ -1,5 +1,8 @@
+use proto_common::marker::SIGNATURE_DURATION;
 use proto_macros::bolt_struct_derive;
+use crate::serialization::{BoltStructure, BoltValue};
 
+#[bolt_struct_derive]
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct Duration {
     pub(crate) months: i64,
@@ -51,5 +54,11 @@ impl From<std::time::Duration> for Duration {
             seconds,
             nanoseconds: nanos,
         }
+    }
+}
+
+impl BoltStructure for Duration {
+    fn signature(&self) -> u8 {
+        SIGNATURE_DURATION
     }
 }

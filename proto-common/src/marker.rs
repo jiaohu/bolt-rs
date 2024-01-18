@@ -1,12 +1,12 @@
 pub const MARKER_NULL: u8 = 0xC0;
-pub const MAKER_FLOAT: u8 = 0xC1;
-pub const MAKER_BOOLEAN_FALSE: u8 = 0xC2;
-pub const MAKER_BOOLEAN_TRUE: u8 = 0xC3;
+pub const MARKER_FLOAT: u8 = 0xC1;
+pub const MARKER_BOOLEAN_FALSE: u8 = 0xC2;
+pub const MARKER_BOOLEAN_TRUE: u8 = 0xC3;
 // tiny int is range of 0xF0~ 0x00 ~ 0x7F, value range [-16, 127]
-pub const MAKER_INT8: u8 = 0xC8;
-pub const MAKER_INT16: u8 = 0xC9;
-pub const MAKER_INT32: u8 = 0xCA;
-pub const MAKER_INT64: u8 = 0xCB;
+pub const MARKER_INT8: u8 = 0xC8;
+pub const MARKER_INT16: u8 = 0xC9;
+pub const MARKER_INT32: u8 = 0xCA;
+pub const MARKER_INT64: u8 = 0xCB;
 // 255 bytes
 pub const MARKER_SMALL_BYTES: u8 = 0xCC;
 // 65,535 bytes

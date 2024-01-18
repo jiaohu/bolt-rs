@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 use proto_macros::bolt_struct_derive;
 use crate::value::value::Value;
+use proto_common::marker::SIGNATURE_RELATIONSHIP;
+use crate::serialization::{BoltStructure, BoltValue};
 
-
+#[bolt_struct_derive]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Relationship {
     pub(crate) identity: i64,
@@ -31,7 +33,7 @@ impl Relationship {
             start_identity: start_id,
             end_identity: end_id,
             rel_type,
-            properties,
+            properties: properties.into_iter().map(|(k, v)| (k, v.into())).collect(),
             element_id,
             start_node_element_id: start_element_id,
             end_node_element_id: end_element_id,
@@ -68,5 +70,11 @@ impl Relationship {
 
     pub fn end_node_element_id(&self) -> &str {
         &self.end_node_element_id
+    }
+}
+
+impl BoltStructure for Relationship {
+    fn signature(&self) -> u8 {
+        SIGNATURE_RELATIONSHIP
     }
 }

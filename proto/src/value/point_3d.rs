@@ -1,5 +1,11 @@
 use proto_macros::bolt_struct_derive;
+use std::panic::UnwindSafe;
+use bytes::{Buf, Bytes};
+use proto_common::marker::SIGNATURE_POINT_3D;
+use crate::result_type::{DeserializeResult, SerializeResult};
+use crate::serialization::{BoltStructure, BoltValue};
 
+#[bolt_struct_derive]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Point3D {
     pub(crate) srid: i32,
@@ -27,5 +33,11 @@ impl Point3D {
 
     pub fn z(&self) -> f64 {
         self.z
+    }
+}
+
+impl BoltStructure for Point3D {
+    fn signature(&self) -> u8 {
+        SIGNATURE_POINT_3D
     }
 }

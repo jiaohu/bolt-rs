@@ -2,8 +2,9 @@ use std::collections::HashMap;
 use crate::value::value::Value;
 use proto_macros::bolt_struct_derive;
 use proto_common::marker::SIGNATURE_NODE;
+use crate::serialization::{BoltStructure, BoltValue};
 
-// #[bolt_struct_derive(SIGNATURE_NODE)]
+#[bolt_struct_derive]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Node {
     pub(crate) identity: i64,
@@ -44,3 +45,8 @@ impl Node {
     }
 }
 
+impl BoltStructure for Node {
+    fn signature(&self) -> u8 {
+        SIGNATURE_NODE
+    }
+}
