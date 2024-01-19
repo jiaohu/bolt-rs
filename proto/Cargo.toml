@@ -1,0 +1,14 @@
+[package]
+name = "proto"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+proto-macros = { path = "../proto-macros" }
+proto-common = { path = "../proto-common" }
+chrono = { version = "0.4.0", default-features = false, features = ["std"] }
+chrono-tz = "0.8.0"
+thiserror = "1.0.44"
+bytes = "1.4.0"

@@ -1,0 +1,2 @@
+[workspace]
+members = ["proto", "proto-common", "proto-macros"]
