@@ -1,11 +1,11 @@
 use std::{collections::HashMap, hash::BuildHasher};
-use std::path::Path;
 
 use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, Offset, TimeZone};
 use chrono_tz::Tz;
 use crate::result_type::{ConversionError, ConversionResult};
 use crate::value::duration::Duration;
 use crate::value::node::Node;
+use crate::value::path::Path;
 use crate::value::point_2d::Point2D;
 use crate::value::point_3d::Point3D;
 use crate::value::relationship::Relationship;
